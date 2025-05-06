@@ -1,28 +1,18 @@
 import streamlit as st
 import streamlit.components.v1 as components
-from google import genai
+import google.generativeai as genai
 import time
 
-# Initialize Gemini Client with your API key
-# In a production app, you should store this in environment variables
-client = genai.Client(api_key="AIzaSyCQwWifDeCAkwQkLfauM7p1RDlHSpqB_DQ")
 
+genai.configure(api_key="AIzaSyC_o4HHVxQiNukuyMTCeRqEOtZ7eJnNfFY")
 
 def generate_gemini_response(prompt):
-    """
-    Function to send a prompt to Gemini API and return the generated response.
-    """
     try:
-        # Call the Gemini API to generate a response
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",  # You can adjust this based on the specific model you want to use
-            contents=prompt,
-        )
-        # Return the text content of the response
+        model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
+        response = model.generate_content(prompt)
         return response.text
     except Exception as e:
         return f"Error: {str(e)}"
-
 
 def auto_scroll_js():
     """Add JavaScript for auto-scrolling the chat container"""
